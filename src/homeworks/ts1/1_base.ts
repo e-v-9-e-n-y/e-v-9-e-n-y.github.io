@@ -75,15 +75,13 @@ type CustomerType = {
   isSubscribed: boolean
 }
 
-type CustomerElement = {
-  name: string;
-  age: number;
-  isSubscribed: boolean
-}
+type CustomerElement = Omit<CustomerType, 'id'>;
 
-export const transformCustomers = (customers: Array<CustomerType>) : CustomerElement[]  => {
-  return customers.reduce((acc, customer: CustomerType)  : CustomerElement[] => {
+type TransformedCustomersType = Record<number, CustomerElement>;
+
+export const transformCustomers = (customers: Array<CustomerType>) : TransformedCustomersType[]  => {
+  return customers.reduce((acc, customer: CustomerType)  : TransformedCustomersType[] => {
     acc[customer.id] = { name: customer.name, age: customer.age, isSubscribed: customer.isSubscribed } as CustomerElement;
     return acc;
-  }, {} as CustomerElement[]);
+  }, {} as TransformedCustomersType[]);
 };
